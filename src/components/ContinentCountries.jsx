@@ -1,24 +1,43 @@
+// React
+import { useEffect, useState } from "react";
+
+// Apollo
 import { useQuery } from "@apollo/client";
+
+// Services
 import { GET_COUNTRIES_BY_CONTINENT } from "../services/continentService";
+import { getCountryDetails } from "../services/countryService";
 
 function ContinentCountries() {
   const { loading, error, data } = useQuery(GET_COUNTRIES_BY_CONTINENT, {
-    variables: { code: "AN" },
+    variables: { code: "EU" },
   });
+
+  const [countryDetails, setCountryDetails] = useState(undefined);
+
+  useEffect(() => {
+    if (data) {
+      const country = data.continent.countries[0];
+      getCountryDetails(country.name).then((details) => {
+        setCountryDetails(details);
+      });
+    }
+  }, [data]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
 
-  const countryNames = data.continent.countries.map((country) => country.name);
-
   return (
     <div>
-      <h2>Countries in Antarctica:</h2>
-      <ul>
-        {countryNames.map((name) => (
-          <li key={name}>{name}</li>
-        ))}
-      </ul>
+      {countryDetails && countryDetails.status == 200 && (
+        <ul>
+          {Object.entries(countryDetails).map(([key, value]) => (
+            <li key={key}>
+              {key}: {JSON.stringify(value)}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
