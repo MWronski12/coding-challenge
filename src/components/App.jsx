@@ -1,23 +1,25 @@
 // React
-import { useState } from 'react'
+import { useState } from "react";
 
 // Chakra UI
-import { Container, VStack, Heading, } from '@chakra-ui/react'
+import { Container, VStack, Heading } from "@chakra-ui/react";
 
 // Components
-import ContinentForm from './ContinentForm.jsx'
+import ContinentForm from "./ContinentForm.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
-    <Container maxW='container.lg' padding={8}>
+    <Container maxW="container.lg" padding={8}>
       <VStack align={"start"} spacing={4}>
-        <Heading as='h1' size='2xl' >Countries</Heading>
+        <Heading as="h1" size="2xl">
+          Countries
+        </Heading>
         <ContinentForm />
       </VStack>
-    </Container >
-  )
+    </Container>
+  );
 }
 
-export default App
+export default App;
