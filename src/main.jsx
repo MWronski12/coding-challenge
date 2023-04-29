@@ -6,7 +6,10 @@ import * as ReactDOM from 'react-dom/client'
 import App from './components/App.jsx'
 
 // Apollo client
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+// Chakra UI
+import { ChakraProvider } from '@chakra-ui/react';
 
 const client = new ApolloClient({
   uri: 'https://countries.trevorblades.com/graphql',
@@ -17,7 +20,9 @@ const rootElement = document.getElementById('root')
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </ApolloProvider>
   </React.StrictMode >,
 )
