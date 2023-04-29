@@ -25,8 +25,13 @@ const continentOptions = {
 };
 
 function ContinentForm() {
-  const toast = useToast();
+  /* ------------------------------ Configuration ----------------------------- */
   const defaultNumOfCountries = 5;
+  const minNumOfCountries = 2;
+  const maxNumOfCountries = 10;
+
+  /* ---------------------------------- Hooks --------------------------------- */
+  const toast = useToast();
   const [continent, setContinent] = useState("");
   const [numCountries, setNumCountries] = useState(defaultNumOfCountries);
 
@@ -71,6 +76,7 @@ function ContinentForm() {
     return true;
   };
 
+  /* -------------------------------- Component ------------------------------- */
   return (
     <Flex w={"100%"}>
       <Select placeholder="Select continent" onChange={onContinentSelectChange}>
@@ -83,8 +89,8 @@ function ContinentForm() {
 
       <NumberInput
         defaultValue={defaultNumOfCountries}
-        min={2}
-        max={10}
+        min={minNumOfCountries}
+        max={maxNumOfCountries}
         onChange={onNumOfCountriesChange}
       >
         <NumberInputField />

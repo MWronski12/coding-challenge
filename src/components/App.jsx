@@ -6,6 +6,7 @@ import { Container, VStack, Heading } from "@chakra-ui/react";
 
 // Components
 import ContinentForm from "./ContinentForm.jsx";
+import ContinentCountries from "./ContinentCountries.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,6 +18,7 @@ function App() {
           Countries
         </Heading>
         <ContinentForm />
+        <ContinentCountries />
       </VStack>
     </Container>
   );
