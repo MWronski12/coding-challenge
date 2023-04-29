@@ -2,7 +2,10 @@
 import { useState } from 'react'
 
 // Chakra UI
-import { Container, VStack, Heading, Stat, StatNumber, Button } from '@chakra-ui/react'
+import { Container, VStack, Heading, } from '@chakra-ui/react'
+
+// Components
+import ContinentForm from './ContinentForm.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,11 +13,8 @@ function App() {
   return (
     <Container maxW='container.lg' padding={8}>
       <VStack align={"start"} spacing={4}>
-        <Heading>Hello World!</Heading>
-        <Stat>
-          <StatNumber>Click count: {count}</StatNumber>
-        </Stat>
-        <Button onClick={() => setCount(count + 1)}>Click me!</Button>
+        <Heading as='h1' size='2xl' >Countries</Heading>
+        <ContinentForm />
       </VStack>
     </Container >
   )
