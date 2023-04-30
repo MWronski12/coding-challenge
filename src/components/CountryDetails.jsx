@@ -13,6 +13,7 @@ import {
   Text,
   Alert,
   Progress,
+  Skeleton,
 } from "@chakra-ui/react";
 
 // Serivces
@@ -21,11 +22,17 @@ import { getCountryDetails } from "../services/countryService";
 function CountryDetails({ countryName }) {
   const ERROR_MESSAGE = "No information found!";
   const [countryDetails, setCountryDetails] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    getCountryDetails(countryName).then((response) => {
-      setCountryDetails(response);
-    });
+    setIsLoaded(false);
+    getCountryDetails(countryName)
+      .then((response) => {
+        setCountryDetails(response);
+      })
+      .then(() => {
+        setIsLoaded(true);
+      });
   }, [countryName]);
 
   return (
@@ -49,14 +56,16 @@ function CountryDetails({ countryName }) {
           <CardBody>
             <Stack divider={<StackDivider />} spacing="4">
               {Object.entries(countryDetails.data).map(([key, value]) => (
-                <Box key={key}>
-                  <Heading size="xs" textTransform="uppercase">
-                    {key}
-                  </Heading>
-                  <Text pt="2" fontSize="sm">
-                    {value}
-                  </Text>
-                </Box>
+                <Skeleton isLoaded={isLoaded}>
+                  <Box key={key}>
+                    <Heading size="xs" textTransform="uppercase">
+                      {key}
+                    </Heading>
+                    <Text pt="2" fontSize="sm">
+                      {value}
+                    </Text>
+                  </Box>
+                </Skeleton>
               ))}
             </Stack>
           </CardBody>
