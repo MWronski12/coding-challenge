@@ -79,7 +79,11 @@ function ContinentForm() {
   /* -------------------------------- Component ------------------------------- */
   return (
     <Flex w={"100%"}>
-      <Select placeholder="Select continent" onChange={onContinentSelectChange}>
+      <Select
+        placeholder="Select continent"
+        onChange={onContinentSelectChange}
+        borderEndRadius={0}
+      >
         {Object.entries(continentOptions).map(([key, value]) => (
           <option key={key} value={value}>
             {value}
@@ -93,14 +97,14 @@ function ContinentForm() {
         max={maxNumOfCountries}
         onChange={onNumOfCountriesChange}
       >
-        <NumberInputField />
+        <NumberInputField borderRadius={0} />
         <NumberInputStepper>
           <NumberIncrementStepper />
           <NumberDecrementStepper />
         </NumberInputStepper>
       </NumberInput>
 
-      <Button colorScheme="red" onClick={onSubmit}>
+      <Button colorScheme="red" onClick={onSubmit} borderStartRadius={0}>
         Search
       </Button>
     </Flex>

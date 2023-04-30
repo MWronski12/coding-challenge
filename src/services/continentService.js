@@ -1,3 +1,4 @@
+// GraphQL query to get countries by continent
 import { gql } from "@apollo/client";
 
 export const GET_COUNTRIES_BY_CONTINENT = gql`

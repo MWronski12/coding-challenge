@@ -38,6 +38,13 @@ function ContinentCountries() {
           ))}
         </ul>
       )}
+      {countryDetails && countryDetails.status != 200 && (
+        <ul>
+          <li>
+            {countryDetails.status}: {countryDetails.message}
+          </li>
+        </ul>
+      )}
     </div>
   );
 }
