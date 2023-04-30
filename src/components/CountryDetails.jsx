@@ -26,7 +26,7 @@ function CountryDetails({ countryName }) {
     getCountryDetails(countryName).then((response) => {
       setCountryDetails(response);
     });
-  }, []);
+  }, [countryName]);
 
   return (
     <>

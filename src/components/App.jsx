@@ -15,6 +15,7 @@ import {
 // Components
 import ContinentForm from "./ContinentForm.jsx";
 import CountryDetails from "./CountryDetails.jsx";
+import SelectCountry from "./SelectCountry.jsx";
 
 import { useQuery } from "@apollo/client";
 import { GET_COUNTRIES_BY_CONTINENT } from "../services/continentService.js";
@@ -23,37 +24,14 @@ function App() {
   /* ---------------------------- Application state --------------------------- */
   const [continentCode, setContinentCode] = useState(null);
   const [numOfCountries, setNumOfCountries] = useState(null);
+  const [randomCountry, setRandomCountry] = useState(null);
+
+  let skipQuery = !continentCode || !numOfCountries;
 
   const { loading, error, data } = useQuery(GET_COUNTRIES_BY_CONTINENT, {
     variables: { code: continentCode },
-    skip: !continentCode || !numOfCountries,
+    skip: skipQuery,
   });
-
-  let queryResult;
-  if (loading) {
-    queryResult = <Progress isIndeterminate size="lg" />;
-  } else if (error) {
-    queryResult = (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle>Your browser is outdated!</AlertTitle>
-        <AlertDescription>
-          Your Chakra experience may be degraded.
-        </AlertDescription>
-      </Alert>
-    );
-  } else if (data) {
-    let countries = data.continent.countries.map((country) => country.name);
-
-    if (countries.length >= numOfCountries) {
-      countries = countries
-        .sort(() => Math.random() - 0.5)
-        .slice(0, numOfCountries);
-    }
-
-    countries = countries.join(", ");
-    queryResult = <Text>{countries}</Text>;
-  }
 
   return (
     <Container maxW="container.lg" padding={8}>
@@ -63,11 +41,15 @@ function App() {
           setNumOfCountries={setNumOfCountries}
         />
 
-        {queryResult}
-
-        {!loading && !error && data && (
-          <CountryDetails countryName={data.continent.countries[0].name} />
+        {!skipQuery && (
+          <SelectCountry
+            queryResult={{ loading, error, data }}
+            numOfCountries={numOfCountries}
+            setCountry={setRandomCountry}
+          />
         )}
+
+        {randomCountry && <CountryDetails countryName={randomCountry} />}
       </VStack>
     </Container>
   );
