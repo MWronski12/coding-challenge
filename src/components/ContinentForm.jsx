@@ -15,6 +15,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
+// Predefined options object
 const continentOptions = {
   AF: "Africa",
   AN: "Antarctica",
@@ -25,12 +26,12 @@ const continentOptions = {
   SA: "South America",
 };
 
-function ContinentForm(props) {
+function ContinentForm({ onFormChange }) {
   /* ------------------------------ Configuration ----------------------------- */
   const defaultNumOfCountries = 5;
   const minNumOfCountries = 2;
   const maxNumOfCountries = 10;
-  const numOfCountriesTooltipLabel = `Number of countries to consider, when displaying detailed information about a random country from the specified continent (min: ${minNumOfCountries}, max: ${maxNumOfCountries})`;
+  const numOfCountriesTooltipLabel = `This number of countries will be randomly picked from countries of the selected continent (min: ${minNumOfCountries}, max: ${maxNumOfCountries})`;
 
   /* ----------------------------- Component state ---------------------------- */
   const [continentCode, setContinentCode] = useState("");
@@ -53,9 +54,8 @@ function ContinentForm(props) {
 
   const onSubmit = () => {
     if (validate()) {
-      // Pass form data to parent component
-      props.setNumOfCountries(numOfCountries);
-      props.setContinentCode(continentCode);
+      // Parent component callback
+      onFormChange(continentCode, numOfCountries);
     } else {
       toast({
         title: "Invalid form input!",
@@ -69,6 +69,7 @@ function ContinentForm(props) {
   };
 
   const validate = () => {
+    // Chakra UIs default value for Select component is an empty string
     if (continentCode === "") {
       return false;
     }
