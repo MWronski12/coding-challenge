@@ -13,11 +13,6 @@ import {
   Button,
   useToast,
   Tooltip,
-  Progress,
-  VStack,
-  Alert,
-  Box,
-  Text,
 } from "@chakra-ui/react";
 
 const continentOptions = {
@@ -37,10 +32,10 @@ function ContinentForm(props) {
   const maxNumOfCountries = 10;
   const numOfCountriesTooltipLabel = `Number of countries to consider, when displaying detailed information about a random country from the specified continent (min: ${minNumOfCountries}, max: ${maxNumOfCountries})`;
 
-  /* ---------------------------------- Hooks --------------------------------- */
-  const toast = useToast();
+  /* ----------------------------- Component state ---------------------------- */
   const [continentCode, setContinentCode] = useState("");
   const [numOfCountries, setNumOfCountries] = useState(defaultNumOfCountries);
+  const toast = useToast();
 
   /* ------------------------------ Form handlers ----------------------------- */
   const onContinentSelectChange = (event) => {
@@ -73,7 +68,6 @@ function ContinentForm(props) {
     }
   };
 
-  /* ----------------------------- Form validation ---------------------------- */
   const validate = () => {
     if (continentCode === "") {
       return false;

@@ -14,8 +14,9 @@ import {
 } from "@chakra-ui/react";
 
 function SelectCountry({ queryResult, numOfCountries, setCountry }) {
-  const ERROR_MESSAGE = "Error fetching continent countries!";
+  const errorMessage = "Error fetching continent countries!";
 
+  /* ------------------------------ When loading ------------------------------ */
   if (queryResult.loading) {
     return (
       <Card w="100%">
@@ -26,15 +27,17 @@ function SelectCountry({ queryResult, numOfCountries, setCountry }) {
     );
   }
 
+  /* ------------------------------- When error ------------------------------- */
   if (queryResult.error) {
     return (
       <Alert status="error">
         <AlertIcon />
-        <AlertDescription>{ERROR_MESSAGE}</AlertDescription>
+        <AlertDescription>{errorMessage}</AlertDescription>
       </Alert>
     );
   }
 
+  /* ------------------------------ When fetched ------------------------------ */
   let countries = queryResult.data.continent.countries.slice();
   if (countries.length > numOfCountries) {
     countries = countries
@@ -44,8 +47,6 @@ function SelectCountry({ queryResult, numOfCountries, setCountry }) {
   } else {
     countries = countries.map((country) => country.name);
   }
-
-  console.log(countries.slice(0, numOfCountries));
 
   const onDisplay = () => {
     const randomCountry =

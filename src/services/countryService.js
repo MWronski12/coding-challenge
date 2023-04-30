@@ -3,15 +3,15 @@ import axios from "axios";
 const API_BASE_URL = "https://restcountries.com/v3.1/name";
 
 export async function getCountryDetails(countryName) {
+  // I added a 1 second delay to simulate a slow network
+  // so you can see the loading indicator
   return new Promise((resolve) => {
     setTimeout(async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/${countryName}`);
-        console.log(response.data[0]);
-        const data = convertResponseData(response);
-        resolve({ status: 200, data });
+        const convertedData = convertResponseData(response);
+        resolve({ status: 200, data: convertedData });
       } catch (error) {
-        console.log(error);
         resolve(error.response.data);
       }
     }, 1000);

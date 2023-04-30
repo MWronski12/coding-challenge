@@ -20,7 +20,10 @@ import {
 import { getCountryDetails } from "../services/countryService";
 
 function CountryDetails({ countryName }) {
-  const ERROR_MESSAGE = "No information found!";
+  /* ------------------------------ Configuration ----------------------------- */
+  const errorMessage = "No information found!";
+
+  /* ----------------------------- Component state ---------------------------- */
   const [countryDetails, setCountryDetails] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -43,7 +46,7 @@ function CountryDetails({ countryName }) {
 
       {countryDetails && countryDetails.status != 200 && (
         <Alert status="error" w="100%">
-          {ERROR_MESSAGE}
+          {errorMessage}
         </Alert>
       )}
 
@@ -56,8 +59,8 @@ function CountryDetails({ countryName }) {
           <CardBody>
             <Stack divider={<StackDivider />} spacing="4">
               {Object.entries(countryDetails.data).map(([key, value]) => (
-                <Skeleton isLoaded={isLoaded}>
-                  <Box key={key}>
+                <Skeleton isLoaded={isLoaded} key={key}>
+                  <Box>
                     <Heading size="xs" textTransform="uppercase">
                       {key}
                     </Heading>
