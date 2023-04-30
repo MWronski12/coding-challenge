@@ -1,10 +1,14 @@
 # coding-challenge
 
-Recruitment coding challenge for software development internship
+Recruitment coding challenge for software development internship.
 
-To run the code:
+You can view the app here:
 
-- Make sure You have node installed
+https://mwronski12.github.io/coding-challenge/
+
+Or run the code:
+
+- Make sure You have node installed (tested with node v18.12.1)
 - `git clone https://github.com/MWronski12/coding-challenge`
 - `cd coding challenge`
 - `npm i`

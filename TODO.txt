@@ -1,8 +1,0 @@
-1) (DONE) Form component that allows the user to select continent and number of countries to retrieve
-2) (DONE) Fetching countries from the selected continent with graphql API
-3) (DONE) Fetching detailed information about the country from REST API
-4) (DONE) Component that displays detailed information about the country (Error message when not found)
-5) (DONE) Implementing global store or props passing to store fetched countries
-6) (DONE) Randomly picking specified number of countries from the graphql API response
-7) (DONE) Randomly picking country to display its detailed information
-8) Integrating all the functionality
