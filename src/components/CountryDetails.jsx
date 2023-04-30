@@ -1,5 +1,6 @@
 // React
 import { useEffect, useState } from "react";
+
 // Chakra UI
 import {
   Card,
@@ -13,12 +14,13 @@ import {
   Alert,
   Progress,
 } from "@chakra-ui/react";
+
 // Serivces
 import { getCountryDetails } from "../services/countryService";
 
 function CountryDetails({ countryName }) {
   const ERROR_MESSAGE = "No information found!";
-  const [countryDetails, setCountryDetails] = useState(undefined);
+  const [countryDetails, setCountryDetails] = useState(null);
 
   useEffect(() => {
     getCountryDetails(countryName).then((response) => {
@@ -28,7 +30,7 @@ function CountryDetails({ countryName }) {
 
   return (
     <>
-      {countryDetails === undefined && (
+      {countryDetails === null && (
         <Progress size="lg" isIndeterminate w="100%" />
       )}
 

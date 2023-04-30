@@ -12,6 +12,12 @@ import {
   NumberDecrementStepper,
   Button,
   useToast,
+  Tooltip,
+  Progress,
+  VStack,
+  Alert,
+  Box,
+  Text,
 } from "@chakra-ui/react";
 
 const continentOptions = {
@@ -24,40 +30,42 @@ const continentOptions = {
   SA: "South America",
 };
 
-function ContinentForm() {
+function ContinentForm(props) {
   /* ------------------------------ Configuration ----------------------------- */
   const defaultNumOfCountries = 5;
   const minNumOfCountries = 2;
   const maxNumOfCountries = 10;
+  const numOfCountriesTooltipLabel = `Number of countries to consider, when displaying detailed information about a random country from the specified continent (min: ${minNumOfCountries}, max: ${maxNumOfCountries})`;
 
   /* ---------------------------------- Hooks --------------------------------- */
   const toast = useToast();
-  const [continent, setContinent] = useState("");
-  const [numCountries, setNumCountries] = useState(defaultNumOfCountries);
+  const [continentCode, setContinentCode] = useState("");
+  const [numOfCountries, setNumOfCountries] = useState(defaultNumOfCountries);
 
   /* ------------------------------ Form handlers ----------------------------- */
   const onContinentSelectChange = (event) => {
-    setContinent(event.target.value);
+    for (const [key, value] of Object.entries(continentOptions)) {
+      if (value === event.target.value) {
+        setContinentCode(key);
+        return;
+      }
+    }
   };
 
   const onNumOfCountriesChange = (number) => {
-    setNumCountries(number);
+    setNumOfCountries(number);
   };
 
   const onSubmit = () => {
     if (validate()) {
-      toast({
-        title: "Nice!",
-        description: "Now You just wait for the results!",
-        status: "success",
-        duration: 6000,
-        isClosable: true,
-      });
+      // Pass form data to parent component
+      props.setNumOfCountries(numOfCountries);
+      props.setContinentCode(continentCode);
     } else {
       toast({
         title: "Invalid form input!",
         description:
-          "You must select the continent and enter number of countries to display!",
+          "You must select the continent and enter number of countries!",
         status: "error",
         duration: 6000,
         isClosable: true,
@@ -67,10 +75,10 @@ function ContinentForm() {
 
   /* ----------------------------- Form validation ---------------------------- */
   const validate = () => {
-    if (continent === "") {
+    if (continentCode === "") {
       return false;
     }
-    if (numCountries === "") {
+    if (numOfCountries === "") {
       return false;
     }
     return true;
@@ -91,21 +99,23 @@ function ContinentForm() {
         ))}
       </Select>
 
-      <NumberInput
-        defaultValue={defaultNumOfCountries}
-        min={minNumOfCountries}
-        max={maxNumOfCountries}
-        onChange={onNumOfCountriesChange}
-      >
-        <NumberInputField borderRadius={0} />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
+      <Tooltip label={numOfCountriesTooltipLabel}>
+        <NumberInput
+          defaultValue={defaultNumOfCountries}
+          min={minNumOfCountries}
+          max={maxNumOfCountries}
+          onChange={onNumOfCountriesChange}
+        >
+          <NumberInputField borderRadius={0} />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </Tooltip>
 
-      <Button colorScheme="red" onClick={onSubmit} borderStartRadius={0}>
-        Search
+      <Button onClick={onSubmit} borderStartRadius={0}>
+        Select
       </Button>
     </Flex>
   );
