@@ -7,9 +7,11 @@ export async function getCountryDetails(countryName) {
     setTimeout(async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/${countryName}`);
+        console.log(response.data[0]);
         const data = convertResponseData(response);
         resolve({ status: 200, data });
       } catch (error) {
+        console.log(error);
         resolve(error.response.data);
       }
     }, 1000);
@@ -17,16 +19,23 @@ export async function getCountryDetails(countryName) {
 }
 
 function convertResponseData(response) {
+  const data = response.data[0];
   const populationFormatter = Intl.NumberFormat("en", { notation: "compact" });
 
   return {
-    officialName: response.data[0].name.official,
-    capital: response.data[0].capital[0],
-    population: populationFormatter.format(response.data[0].population),
-    currencies: Object.values(response.data[0].currencies)
-      .map((value) => value.name)
-      .join(", "),
-    subregion: response.data[0].subregion,
-    languages: Object.values(response.data[0].languages).join(", "),
+    officialName: data.name?.official || "N/A",
+    capital: data.capital?.[0] || "N/A",
+    population: data.population
+      ? populationFormatter.format(data.population)
+      : "N/A",
+    currencies: data.currencies
+      ? Object.values(data.currencies)
+          .map((currency) => currency.name)
+          .join(", ")
+      : "N/A",
+    subregion: data.subregion || "N/A",
+    languages: data.languages
+      ? Object.values(data.languages).join(", ")
+      : "N/A",
   };
 }
